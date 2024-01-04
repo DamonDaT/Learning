@@ -1,4 +1,5 @@
 import pdfplumber
+import pandas as pd
 
 """
 1. Class pdfplumber.PDF
@@ -42,8 +43,6 @@ pdf = pdfplumber.open(r'D:\XXX\YYY.pdf')
 pdf_pages = pdf.pages
 
 # 利用 pandas.DataFrame 处理表格数据
-import pandas as pd
-
 table = pdf_pages[0].extract_table()
 df = pd.DataFrame(data=table[1:], columns=table[0])
 
