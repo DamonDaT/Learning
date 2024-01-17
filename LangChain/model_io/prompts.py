@@ -34,7 +34,7 @@ prompt_str = prompt_template.format(flower_name="玫瑰", price="50")
 
 # Model
 model = OpenAI()
-# result = model.invoke(prompt_str)
+result = model.invoke(prompt_str)
 
 """
     CASE 2:
@@ -52,7 +52,7 @@ chat_prompt_value = chat_prompt_template.format_prompt(product="鲜花装饰",
 
 # Model
 chat_model = ChatOpenAI()
-# result = chat_model.invoke(chat_prompt_value).content
+result = chat_model.invoke(chat_prompt_value).content
 
 """
     CASE 3:
@@ -85,6 +85,7 @@ examples = [
 # Prompt
 template = "鲜花类型: {flower_type}\n场合: {occasion}\n文案: {ad_copy}"
 prompt_template = PromptTemplate(input_variables=["flower_type", "occasion", "ad_copy"], template=template)
+
 # Example Selector
 example_selector = SemanticSimilarityExampleSelector.from_examples(
     examples=examples,
