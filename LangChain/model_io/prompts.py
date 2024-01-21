@@ -84,7 +84,7 @@ examples = [
 
 # Prompt
 template = "鲜花类型: {flower_type}\n场合: {occasion}\n文案: {ad_copy}"
-prompt_template = PromptTemplate(input_variables=["flower_type", "occasion", "ad_copy"], template=template)
+prompt_template = PromptTemplate(template=template, input_variables=["flower_type", "occasion", "ad_copy"])
 
 # Example Selector
 example_selector = SemanticSimilarityExampleSelector.from_examples(
