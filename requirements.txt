@@ -1,0 +1,6 @@
+python-dotenv
+torch
+transformers
+langchain
+langchain-openai
+llama-cpp-python
