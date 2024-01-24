@@ -21,14 +21,17 @@ input_list = [
 ]
 
 # Model
-model = OpenAI()
+llm = OpenAI()
+
+# LLM Chain
+llm_chain = LLMChain(llm=llm, prompt=prompt_template)
 
 """
     CASE 0:
         Traditional modelio process.
 """
 
-result = model.invoke(prompt_str)
+result = llm.invoke(prompt_str)
 
 """
     CASE 1:
@@ -37,11 +40,6 @@ result = model.invoke(prompt_str)
         dict. {"variable": "xxx", "text": "yyy"}
 """
 
-# LLM Chain
-llm_chain = LLMChain(
-    llm=model,
-    prompt=prompt_template
-)
 result = llm_chain.invoke({"cartoon_name": "龙珠"})
 
 """
