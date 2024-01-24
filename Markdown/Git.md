@@ -51,7 +51,7 @@ git commit -m "[xxx] yyy"
 ##### 【1.7】丢弃工作区修改
 
 ```shell
-git checkout -- [file/re]
+git restore [file/re]
 ```
 
 ##### 【1.8】撤回添加暂存区
