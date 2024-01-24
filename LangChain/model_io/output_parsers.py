@@ -2,9 +2,9 @@ from dotenv import load_dotenv
 from typing import List
 
 from langchain_core.pydantic_v1 import BaseModel, Field
+from langchain_core.prompts import PromptTemplate
 
 from langchain_openai import OpenAI, ChatOpenAI
-from langchain.prompts import PromptTemplate
 
 from langchain.output_parsers.pydantic import PydanticOutputParser
 from langchain.output_parsers.fix import OutputFixingParser
