@@ -54,25 +54,31 @@ git commit -m "[xxx] yyy"
 git restore [file/re]
 ```
 
-##### 【1.8】撤回添加暂存区
+##### 【1.8】丢弃暂存区修改（保留工作区）
 
 ```shell
-git restore --staged [file/re]
+git restore --staged [file/re]  /  git reset HEAD [file/re]
 ```
 
-##### 【1.9】丢弃暂存区修改
+##### 【1.9】丢弃版本库的修改（保留工作区和暂存区）
 
 ```shell
-git reset HEAD [file/re]
+git reset --soft [commit_id/reflog_tag]
 ```
 
-##### 【1.10】版本回退
+##### 【1.10】丢弃版本库的修改（丢弃工作区和暂存区）
 
 ```shell
 git reset --hard [commit_id/reflog_tag]
 ```
 
-##### 【1.11】删除版本库文件
+##### 【1.11】还原删除的文件（前提版本库里还存在）
+
+```shell
+git checkout -- [file/re]
+```
+
+##### 【1.12】删除版本库文件
 
 ```shell
 git rm [file/re]
