@@ -37,7 +37,7 @@ template_2 = """你是一位动漫评论家。根据给定动漫的设计细节�
 {design}
 \n动漫评论家: 这是关于上述动漫的评论:
 """
-prompt_template_2 = PromptTemplate(template=template_2, input_variables=["introduction"])
+prompt_template_2 = PromptTemplate(template=template_2, input_variables=["design"])
 
 # LLM Chain
 llm_chain_2 = LLMChain(llm=llm, prompt=prompt_template_2, output_key="review")
