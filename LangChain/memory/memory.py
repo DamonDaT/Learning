@@ -33,6 +33,9 @@ buffer = conversation_chain.memory.buffer
 """
     CASE 1:
         ConversationBufferMemory (default).
+        
+    Description:
+        All conversation information will be retained.
 """
 
 # Conversation chain
@@ -41,6 +44,9 @@ conversation_chain = ConversationChain(llm=llm)
 """
     CASE 2:
         ConversationBufferWindowMemory.
+    
+    Description:
+        The retained conversation information will depend on the window size.
 """
 
 # Conversation chain
@@ -49,6 +55,9 @@ conversation_chain = ConversationChain(llm=llm, memory=ConversationBufferWindowM
 """
     CASE 3:
         ConversationSummaryMemory.
+   
+    Description:
+        Each conversation will be summarized.
 """
 
 # Conversation chain
@@ -57,6 +66,9 @@ conversation_chain = ConversationChain(llm=llm, memory=ConversationSummaryMemory
 """
     CASE 4:
         ConversationSummaryBufferMemory.
+        
+    Description:
+        If the number of tokens exceeds the limit, the conversation will be summarized.
 """
 
 # Conversation chain
