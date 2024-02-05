@@ -23,9 +23,6 @@ load_dotenv(verbose=True)
 model_dir = r"/home/dateng/model/huggingface/meta-llama/Llama-2-7b-chat-hf"
 model_dir_gguf = '/home/dateng/model/huggingface/TheBloke/Llama-2-7B-Chat-GGUF'
 
-# Initialize tokenizer
-tokenizer = AutoTokenizer.from_pretrained(model_dir)
-
 """
     CASE 1:
         Use Huggingface to call Llama2 (Llama-2-7b-chat-hf) model.
@@ -33,6 +30,9 @@ tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
 # Model
 model = AutoModelForCausalLM.from_pretrained(model_dir, device_map="auto", torch_dtype=torch.float16)
+
+# Initialize tokenizer
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
 # Prompt
 prompt = "请给我讲个关于龙珠里的卡卡罗特的传说"
