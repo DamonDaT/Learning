@@ -1,17 +1,21 @@
 from dotenv import load_dotenv
 
 from langchain import hub
+
 from langchain.agents import load_tools
 from langchain.agents import AgentExecutor, create_react_agent
 
 from langchain_core.prompts import PromptTemplate
+
 from langchain_openai import OpenAI
 
 # Initialize environment variables from .env file
 load_dotenv(verbose=True)
 
+# Model
 llm = OpenAI()
 
+# Tools
 tools = load_tools(["serpapi", "llm-math"], llm=llm)
 
 # Prompt from hub.pull("hwchase17/react")
@@ -36,6 +40,7 @@ Question: {input}
 Thought:{agent_scratchpad}
 """
 
+# Prompt template
 prompt_template = PromptTemplate.from_template(template)
 
 # Create ReAct Agent

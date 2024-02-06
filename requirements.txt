@@ -3,5 +3,8 @@ python-dotenv
 torch
 transformers
 langchain
+langchainhub
 langchain-openai
 llama-cpp-python
+google-search-results
+playwright
