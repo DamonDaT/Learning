@@ -2,15 +2,11 @@ from dotenv import load_dotenv
 
 from langchain import hub
 
+from langchain.agents import AgentExecutor, create_structured_chat_agent
 from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
 from langchain_community.tools.playwright.utils import create_sync_playwright_browser
 
-from langchain.agents import AgentExecutor, create_structured_chat_agent
-
 from langchain_openai import ChatOpenAI
-
-import langchain
-langchain.debug = True
 
 # Initialize environment variables from .env file
 load_dotenv(verbose=True)

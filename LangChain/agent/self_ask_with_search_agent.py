@@ -2,15 +2,10 @@ from dotenv import load_dotenv
 
 from langchain import hub
 
-from langchain_community.utilities import SerpAPIWrapper
-
-from langchain.agents import Tool, AgentExecutor, create_self_ask_with_search_agent
+from langchain.agents import AgentExecutor, create_self_ask_with_search_agent, Tool
+from langchain_community.utilities.serpapi import SerpAPIWrapper
 
 from langchain_openai import ChatOpenAI
-
-import langchain
-
-langchain.debug = True
 
 # Initialize environment variables from .env file
 load_dotenv(verbose=True)
