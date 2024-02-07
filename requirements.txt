@@ -8,3 +8,5 @@ langchain-openai
 llama-cpp-python
 google-search-results
 playwright
+docarray
+faiss-gpu
