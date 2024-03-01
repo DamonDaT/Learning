@@ -11,7 +11,7 @@ load_dotenv(verbose=True)
 """
 
 text_loader = TextLoader(file_path=r'D:\Data\XXX\YYY.txt')
-documents = text_loader.load()
+text_docs = text_loader.load()
 
 """
     CASE 2:
@@ -19,8 +19,8 @@ documents = text_loader.load()
 """
 
 arxiv_loader = ArxivLoader(query='2005.14165', load_max_docs=5)
-documents = arxiv_loader.load()
-metadata = documents[0].metadata
+arxiv_docs = arxiv_loader.load()
+metadata = arxiv_docs[0].metadata
 
 """
     CASE 3:
@@ -28,6 +28,6 @@ metadata = documents[0].metadata
 """
 
 unstructured_url_loader = UnstructuredURLLoader(urls=['https://react-lm.github.io/'], mode='elements')
-documents = unstructured_url_loader.load()
-metadata = documents[0].metadata
-page_content = documents[0].page_content
+url_docs = unstructured_url_loader.load()
+metadata = url_docs[0].metadata
+page_content = url_docs[0].page_content
