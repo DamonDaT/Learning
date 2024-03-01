@@ -10,7 +10,7 @@ load_dotenv(verbose=True)
         OpenAIEmbeddings.
 """
 
-# Model
+# Embeddings model
 embeddings_model = OpenAIEmbeddings()
 
 # Documents
