@@ -10,7 +10,7 @@ load_dotenv(verbose=True)
         TextLoader. (The simplest loader reads in a file as text and places it all into one document)
 """
 
-text_loader = TextLoader(file_path=r'D:\Data\XXX\YYY.txt')
+text_loader = TextLoader(file_path='../../Data/txt/state_of_the_union.txt')
 text_docs = text_loader.load()
 
 """
