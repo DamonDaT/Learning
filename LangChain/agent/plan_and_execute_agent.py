@@ -11,7 +11,7 @@ from langchain_openai import OpenAI, ChatOpenAI
 load_dotenv(verbose=True)
 
 # Model
-model = ChatOpenAI(temperature=0)
+model = ChatOpenAI(model_name="gpt-4", temperature=0, verbose=True)
 
 # Tool 1
 search = SerpAPIWrapper()
@@ -22,12 +22,12 @@ llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
 
 tools = [
     Tool(
-        name="Search",
+        name="search",
         func=search.run,
         description="useful for when you need to answer questions about current events"
     ),
     Tool(
-        name="Calculator",
+        name="calculator",
         func=llm_math_chain.invoke,
         description="useful for when you need to answer questions about math"
     ),
@@ -41,4 +41,4 @@ executor = load_agent_executor(model, tools, verbose=True)
 
 # Run Agent
 agent = PlanAndExecute(planner=planner, executor=executor, verbose=True)
-agent.invoke({"input": "卡卡罗特的超级赛亚人1和超级赛亚人2的战斗力数值相差了多少?"})
+agent.invoke({"input": "2023年成都大运会，中国金牌数和银牌数相差多少"})
