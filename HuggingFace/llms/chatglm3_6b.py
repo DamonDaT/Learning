@@ -21,6 +21,6 @@ model = AutoModel.from_pretrained(
 )
 model = model.eval()
 
-#
+# Use ChatGLM3-6B
 response, history = model.chat(tokenizer, "你好", history=[])
-response, history = model.chat(tokenizer, "如何能高效的准备面试", history=history)
+response, history = model.chat(tokenizer, "如何理解马斯克的时间拳法", history=history)
