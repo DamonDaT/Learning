@@ -21,6 +21,12 @@ model = AutoModel.from_pretrained(
 )
 model = model.eval()
 
+# Model Quantization
+# model = AutoModel.from_pretrained(model_dir, trust_remote_code=True).quantize(4).cuda()
+
+# CPU deployment
+# model = AutoModel.from_pretrained(model_dir, trust_remote_code=True).float()
+
 # Use ChatGLM3-6B
 response, history = model.chat(tokenizer, "你好", history=[])
 response, history = model.chat(tokenizer, "如何理解马斯克的时间拳法", history=history)
