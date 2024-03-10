@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 
 import torch
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # Initialize environment variables from .env file
 load_dotenv(verbose=True)
@@ -13,7 +13,7 @@ model_dir = r"/home/dateng/model/huggingface/meta-llama/Llama-2-7b-chat-hf"
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
 # Load Model
-model = AutoModel.from_pretrained(model_dir, device_map="auto", torch_dtype=torch.float16)
+model = AutoModelForCausalLM.from_pretrained(model_dir, device_map="auto", torch_dtype=torch.float16)
 
 # Prompt
 prompt = "如何理解马斯克的时间拳法"
