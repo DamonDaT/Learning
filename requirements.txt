@@ -2,6 +2,7 @@ pydantic
 python-dotenv
 torch
 transformers
+datasets
 langchain
 langchainhub
 langchain-openai
