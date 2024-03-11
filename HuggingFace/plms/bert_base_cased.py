@@ -11,19 +11,15 @@ load_dotenv(verbose=True)
 
 # Dataset dir
 dataset_dir = r"/home/dateng/dataset/huggingface/yelp_review_full"
-
 # Model dir
 model_dir = r"/home/dateng/model/huggingface/google-bert/bert-base-cased"
-
 # Output dir
 output_dir = r"/home/dateng/model/huggingface/google-bert/fine-tune/bert-base-cased-finetune-yelp"
 
 # Load tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
-
 # Load model
 model = AutoModelForSequenceClassification.from_pretrained(model_dir, num_labels=5)
-
 # Load dataset
 dataset = load_dataset(dataset_dir)
 
