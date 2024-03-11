@@ -1,8 +1,10 @@
 pydantic
 python-dotenv
+numpy
 torch
 transformers
 datasets
+evaluate
 langchain
 langchainhub
 langchain-openai
