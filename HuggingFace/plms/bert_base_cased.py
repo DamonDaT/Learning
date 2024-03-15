@@ -29,6 +29,7 @@ def tokenize_func(examples):
     return tokenizer(examples["text"], padding="max_length", truncation=True)
 
 
+# Apply preprocessing function to dataset
 tokenized_datasets = dataset.map(tokenize_func, batched=True)
 
 # Data sampling

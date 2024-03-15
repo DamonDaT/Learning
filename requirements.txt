@@ -2,6 +2,7 @@ pydantic
 python-dotenv
 numpy
 torch
+tqdm
 transformers
 datasets
 evaluate
