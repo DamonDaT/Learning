@@ -10,7 +10,7 @@ load_dotenv(verbose=True)
 # Model dir
 model_dir = r"/home/dateng/model/huggingface/facebook/opt-6.7b"
 # Output dir
-output_dir = r"/home/dateng/model/huggingface/facebook/quantization/opt-6.7b"
+output_dir = r"/home/dateng/model/huggingface/facebook/quantization/opt-6.7b-gptq"
 
 # Quantization config
 gptq_config = GPTQConfig(

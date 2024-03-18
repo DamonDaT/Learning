@@ -18,3 +18,4 @@ arxiv
 pymupdf
 optimum
 auto-gptq
+autoawq
