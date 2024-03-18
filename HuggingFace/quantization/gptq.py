@@ -26,7 +26,7 @@ gptq_config = GPTQConfig(
 #     quantization_config=gptq_config,
 #     device_map="auto"
 # )
-#
+
 # # Save model
 # gptq_model.save_pretrained(output_dir)
 
@@ -44,4 +44,5 @@ gptq_model = AutoModelForCausalLM.from_pretrained(
 inputs = tokenizer("Merry Christmas! I'm glad to", return_tensors="pt").to("cuda")
 
 # Generate
-outputs = gptq_model.generate(**inputs, max_new_tokens=64)
+outputs = tokenizer.decode(gptq_model.generate(**inputs, max_new_tokens=64)[0], skip_special_tokens=True)
+print(outputs)

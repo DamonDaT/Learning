@@ -19,3 +19,4 @@ pymupdf
 optimum
 auto-gptq
 autoawq
+bitsandbytes
