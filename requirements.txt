@@ -16,3 +16,5 @@ docarray
 faiss-gpu
 arxiv
 pymupdf
+optimum
+auto-gptq
