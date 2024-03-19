@@ -45,4 +45,3 @@ inputs = tokenizer("Merry Christmas! I'm glad to", return_tensors="pt").to("cuda
 
 # Generate
 outputs = tokenizer.decode(gptq_model.generate(**inputs, max_new_tokens=64)[0], skip_special_tokens=True)
-print(outputs)

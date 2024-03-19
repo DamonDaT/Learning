@@ -20,3 +20,4 @@ optimum
 auto-gptq
 autoawq
 bitsandbytes
+peft
