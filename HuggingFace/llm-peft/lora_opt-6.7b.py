@@ -25,15 +25,26 @@ model_dir = r"/home/dateng/model/huggingface/facebook/opt-6.7b"
 # Output dir
 output_dir = r"/home/dateng/model/huggingface/facebook/peft/opt-6.7b-lora"
 
-# Quantization model
-lora_model = OPTForCausalLM.from_pretrained(model_dir, load_in_8bit=True)
-
 # Load tokenizer
 tokenizer = GPT2Tokenizer.from_pretrained(model_dir)
 
 """
-    Step 2: Model preprocessing
+    Step 2: Dataset preprocessing
 """
+
+# Load dataset
+dataset = load_dataset(dataset_dir)
+# Apply preprocessing function to dataset
+tokenized_datasets = dataset.map(lambda samples: tokenizer(samples["quote"]), batched=True)
+# 数据收集器，用于处理语言模型的数据，这里设置为不使用掩码语言模型(MLM)
+data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
+
+"""
+    Step 3: Model preprocessing
+"""
+
+# Quantization model
+lora_model = OPTForCausalLM.from_pretrained(model_dir, load_in_8bit=True)
 
 # 将所有非 int8 模块转换为全精度（fp32）以保证稳定性
 # 为输入嵌入层添加一个 forward_hook，以启用输入隐藏状态的梯度计算
@@ -50,24 +61,13 @@ lora_config = LoraConfig(
     bias="none"
 )
 
-# Load model
+# Reload model
 lora_model = get_peft_model(lora_model, lora_config)
 
 lora_model.use_cache = False
 
 # # Calculate training parameters
 # lora_model.print_trainable_parameters()
-
-"""
-    Step 3: Dataset preprocessing
-"""
-
-# Load dataset
-dataset = load_dataset(dataset_dir)
-# Apply preprocessing function to dataset
-tokenized_datasets = dataset.map(lambda samples: tokenizer(samples["quote"]), batched=True)
-# 数据收集器，用于处理语言模型的数据，这里设置为不使用掩码语言模型(MLM)
-data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
 """
     Step 4: Train

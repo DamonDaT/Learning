@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 
 import torch
 
-from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 # Initialize environment variables from .env file
 load_dotenv(verbose=True)

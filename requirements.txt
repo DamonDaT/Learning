@@ -3,6 +3,8 @@ python-dotenv
 numpy
 torch
 tqdm
+ffmpeg
+ffmpeg-python
 transformers
 datasets
 evaluate

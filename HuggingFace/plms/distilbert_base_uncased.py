@@ -303,6 +303,5 @@ formatted_predictions = [
 references = [{"id": ex["id"], "answers": ex["answers"]} for ex in dataset["validation"]]
 
 # Evaluation metric
-# metric = evaluate.load("squad_v2", trust_remote_code=True)
 metric = evaluate.load("squad_v2", trust_remote_code=True)
 metric.compute(predictions=formatted_predictions, references=references)
