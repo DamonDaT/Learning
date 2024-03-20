@@ -119,7 +119,7 @@ class DataCollatorSpeechSeq2SeqWithPadding:
         return batch  # 返回最终的批次，准备好进行训练或评估
 
 
-# Create data collator
+# Initialize data collator
 data_collator = DataCollatorSpeechSeq2SeqWithPadding(processor=processor)
 
 """
