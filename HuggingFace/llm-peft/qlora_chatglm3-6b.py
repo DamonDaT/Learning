@@ -8,6 +8,7 @@ from transformers import TrainingArguments, Trainer
 
 from peft import prepare_model_for_kbit_training, get_peft_model
 from peft import TaskType, LoraConfig
+from peft import PeftConfig, PeftModel
 from peft.utils import TRANSFORMERS_MODELS_TO_LORA_TARGET_MODULES_MAPPING
 
 from datasets import load_dataset
@@ -25,18 +26,6 @@ dataset_dir = r"/home/dateng/dataset/huggingface/HasturOfficial/adgen"
 model_dir = r"/home/dateng/model/huggingface/THUDM/chatglm3-6b"
 # Output dir
 output_dir = r"/home/dateng/model/huggingface/THUDM/peft/chatglm3-6b-qlora"
-
-# 定义全局变量和参数
-eval_data_path = None  # 验证数据路径，如果没有则设置为None
-seed = 8  # 随机种子
-max_input_length = 512  # 输入的最大长度
-max_output_length = 1536  # 输出的最大长度
-lora_rank = 4  # LoRA秩
-lora_alpha = 32  # LoRA alpha值
-lora_dropout = 0.05  # LoRA Dropout率
-resume_from_checkpoint = None  # 如果从checkpoint恢复训练，指定路径
-prompt_text = ''  # 所有数据前的指令文本
-compute_dtype = 'fp32'  # 计算数据类型（fp32, fp16, bf16）
 
 """
     Step 2: Load various processors
@@ -68,7 +57,7 @@ def tokenize_func(example, tokenizer, ignore_label_id=-100):
     """
 
     # 构建问题文本
-    question = prompt_text + example['content']
+    question = example['content']
     if example.get('input', None) and example['input'].strip():
         question += f'\n{example["input"]}'
 
@@ -80,10 +69,10 @@ def tokenize_func(example, tokenizer, ignore_label_id=-100):
     a_ids = tokenizer.encode(text=answer, add_special_tokens=False)
 
     # 如果tokenize后的长度超过最大长度限制，则进行截断
-    if len(q_ids) > max_input_length - 2:  # 保留空间给gmask和bos标记
-        q_ids = q_ids[:max_input_length - 2]
-    if len(a_ids) > max_output_length - 1:  # 保留空间给eos标记
-        a_ids = a_ids[:max_output_length - 1]
+    if len(q_ids) > 512 - 2:  # 保留空间给gmask和bos标记
+        q_ids = q_ids[:512 - 2]
+    if len(a_ids) > 1536 - 1:  # 保留空间给eos标记
+        a_ids = a_ids[:1536 - 1]
 
     # 构建模型的输入格式
     input_ids = tokenizer.build_inputs_with_special_tokens(q_ids, a_ids)
@@ -177,7 +166,7 @@ data_collator = DataCollatorForChatGLM(pad_token_id=tokenizer.pad_token_id)
 """
 
 # Quantization config
-bnb4_config = BitsAndBytesConfig(
+quantization_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type='nf4',
     bnb_4bit_use_double_quant=True,
@@ -187,7 +176,7 @@ bnb4_config = BitsAndBytesConfig(
 # Load model
 chat_model = AutoModel.from_pretrained(
     model_dir,
-    quantization_config=bnb4_config,
+    quantization_config=quantization_config,
     device_map="auto",
     trust_remote_code=True,
     revision='b098244'
@@ -247,8 +236,43 @@ trainer = Trainer(
     data_collator=data_collator
 )
 
-# Start training
-trainer.train()
+# # Start training
+# trainer.train()
 
-# Save model
-trainer.model.save_pretrained(output_dir)
+# # Save model
+# trainer.model.save_pretrained(output_dir)
+
+"""
+    Step 6: Use the PEFT model
+"""
+
+peft_config = PeftConfig.from_pretrained(output_dir)
+
+quantization_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type='nf4',
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_compute_dtype=torch.float32
+)
+
+base_model = AutoModel.from_pretrained(
+    peft_config.base_model_name_or_path,
+    quantization_config=quantization_config,
+    device_map="auto",
+    trust_remote_code=True
+)
+
+base_model.requires_grad_(False)
+base_model.eval()
+
+peft_model = PeftModel.from_pretrained(base_model, output_dir)
+
+tokenizer = AutoTokenizer.from_pretrained(peft_config.base_model_name_or_path, trust_remote_code=True)
+
+input_text = '类型#裙*版型#显瘦*风格#文艺*风格#简约*图案#印花*图案#撞色*裙下摆#压褶*裙长#连衣裙*裙领型#圆领'
+
+# Before PEFT
+response, history = base_model.chat(tokenizer=tokenizer, query=input_text)
+
+# After PEFT
+response, history = peft_model.chat(tokenizer=tokenizer, query=input_text)
