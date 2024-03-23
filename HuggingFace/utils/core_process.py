@@ -13,10 +13,10 @@ load_dotenv(verbose=True)
 """
 
 snapshot_download(
-    repo_id="google-t5/t5-3b",
-    local_dir=r"/home/dateng/model/huggingface/google-t5/t5-3b",
+    repo_id="meta-llama/Llama-2-7b-hf",
+    local_dir=r"/home/dateng/model/huggingface/meta-llama/Llama-2-7b-hf",
     local_dir_use_symlinks=False,
-    ignore_patterns=["pytorch*", "tf_*"],
+    ignore_patterns=["pytorch_*"],
     token=os.getenv("HUGGINGFACEHUB_API_TOKEN")
 )
 
@@ -24,4 +24,4 @@ snapshot_download(
     2. Load dataset.
 """
 
-# dataset = load_dataset(r"/home/dateng/dataset/huggingface/yelp_review_full")
+dataset = load_dataset(r"/home/dateng/dataset/huggingface/yelp_review_full")
